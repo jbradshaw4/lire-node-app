@@ -1,25 +1,91 @@
 
-var command= process.argv[2];
+var request = require('request'); //this is the package for movie-this
 
-var values = process.argv[3];
+var command= process.argv[2]; //not really sure- this is the command I use in bash
 
-var Twitter = require("twitter");
+var values = process.argv[3]; // this is the value of what I type in- ie "star wars"
 
-var twitterKeys = require("./keys.js")
+var Twitter = require("twitter"); // this is the twitter call
+
+var twitterKeys = require("./keys.js"); // requires the api keys in keys.js
+
+var fs = require ("fs"); // file system
+
+
 
 
 
 
 
 switch(command) {
+
     case "my-tweets":
         tweets(values);
         break;
+
     case "spotify-this-song":
         spotify(values);
         break;
-    default:console.log("command not found")
+
+    case "movie-this":
+        movieInfo(values);
+        break;
+
+    case "do-what-it-says":
+      doWhatItSays(values);
+        break;
+
+    default:
+    console.log("Invalid Entry. Please enter one of the following:");
+    console.log("1. my-tweets");
+    console.log("3. spotify-this-song and song name");
+    console.log("4. movie-this and movie name");
+    console.log("5. do-what-it-says");
 }
+
+function doWhatItSays(values){
+  
+  fs.readFile('random.txt', 'utf8', function(err, data){
+    if (err){
+      throw err;
+    }
+    
+    var dataArr = data.split(",");
+    
+    
+  })
+
+}
+
+function  movieInfo(values){
+
+   
+	request('http://www.omdbapi.com/?t=' + values + '&y=&plot=short&tomatoes=true&r=json',
+   function (error, response, body) {
+
+ 
+  // Print the response status code if a response was received
+  var movie = JSON.parse(body);
+
+
+  console.log('-----------------------------');
+  console.log('Title: ' + movie.Title);
+  console.log('Year: ' + movie.Year);
+  console.log('IMDB Rating: ' + movie.Ratings[0].Value);
+  console.log('Country Produced: ' + movie.Country);
+  console.log('Language: ' + movie.Language );
+  console.log('Plot: ' + movie.Plot);
+  console.log('Actors: ' + movie.Actors);
+  console.log('Rotten Tomatoes Rating: ' + movie.Ratings[1].Value);
+  console.log('Rotten Tomatoes Link: ' + movie.tomatoURL);
+  console.log('------------------------------');
+
+  
+
+});
+
+}
+
 
 
 function spotify(values){
