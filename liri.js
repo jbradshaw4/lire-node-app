@@ -1,4 +1,5 @@
 
+
 var request = require('request'); //this is the package for movie-this
 
 var command= process.argv[2]; //not really sure- this is the command I use in bash
@@ -51,9 +52,10 @@ function doWhatItSays(values){
     }
     
     var dataArr = data.split(",");
+    spotify(dataArr[1]);
     
     
-  })
+  });
 
 }
 
@@ -89,7 +91,7 @@ function  movieInfo(values){
 
 
 function spotify(values){
-  console.log(values);
+
 
   var spotify = require("spotify");
 
@@ -103,12 +105,16 @@ function spotify(values){
  
    
    var artists = data['tracks']['items'][1]['artists'][0]['name'];
-   var album = data['tracks']['items'][1]['artists'][0]['name'];
-   var songPreview = data['tracks']['items'][1]['external_urls']['spotify'];
-   for(var i = 0; i<3; i++){
-   var track = data['tracks']['items'][1]['artists'][0]['name'];
 
-    
+   var track = data['tracks']['items'][1]['name'];
+
+   var album = data['tracks']['items'][1]['album']['name'];
+
+   var songPreview = data['tracks']['items'][1]['external_urls']['spotify'];
+
+  
+
+   
     
       console.log("---------------------");
       console.log('Artist: ' + artists);
@@ -116,13 +122,14 @@ function spotify(values){
       console.log('Track ' + track);
       console.log("----------------------");
       console.log('Album ' + album);
+      console.log("----------------------");
       console.log('Song Preview: ' + songPreview);
+      console.log("----------------------");
     
+})
 }
-});
 
 
-}
 
 function tweets(){
 
